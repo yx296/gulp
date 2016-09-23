@@ -25,7 +25,7 @@ gulp.task('styles', ['clean-styles'], function() {
 		.pipe(gulp.dest(config.temp));
 })
 
-gulp.task('clean-styles', function(done) {
+gulp.task('clean-styles', function() {
 	var files = config.temp + '**/*.css';
 	return clean(files);
 })
