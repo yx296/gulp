@@ -20,6 +20,7 @@ gulp.task('styles', ['clean-styles'], function() {
 	log('Compiling less to CSS');
 	return gulp
 		.src(config.less)
+		.pipe($.plumber())
 		.pipe($.less())
 		.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
 		.pipe(gulp.dest(config.temp));
@@ -30,8 +31,11 @@ gulp.task('clean-styles', function() {
 	return clean(files);
 })
 
-///////////
+gulp.task('less-watcher', function() {
+	gulp.watch([config.less], ['styles']);
+});
 
+///////////
 function clean(path) {
 	log('Cleaning: ' + $.util.colors.blue(path));
 	return del(path);
