@@ -40,7 +40,6 @@ gulp.task('wiredep', function() {
 	var options = config.getWiredepDefaultOptions();
 	
 	var wiredep = require('wiredep').stream;
-	
 	return gulp
 		.src(config.index)
 		.pipe(wiredep(options))

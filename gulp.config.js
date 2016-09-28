@@ -1,5 +1,5 @@
-module.exports = function() {
-	var client = './src/client';
+module.exports = function()  {
+	var client = './src/client/';
 	var clientApp = client + 'app/';
 	var config = {
 		temp: './.tmp/',
@@ -26,7 +26,7 @@ module.exports = function() {
 			directory: './bower_components/',
 			ignorePath: '../..'
 		}
-	}
+	};
 	
 	config.getWiredepDefaultOptions = function() {
 		var options = {
@@ -35,7 +35,7 @@ module.exports = function() {
 			ignorePath: config.bower.ignorePath
 		};
 		return options;
-	}
+	};
 	
 	return config;
 };
