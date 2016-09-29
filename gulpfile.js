@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
+var browserSync = require('browser-sync');
 var config = require('./gulp.config')();
 var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
@@ -62,15 +63,28 @@ gulp.task('serve-dev', ['inject'], function() {
 	var isDev = true;
 	
 	var nodeOptions = {
-		script: config.nodeServer, //TODO app.js
+		script: config.nodeServer,
 		delayTime: 1,
 		env: {
 			'PORT': port,
-			'NODE_ENV': isDev ? 'dev': 'build';
+			'NODE_ENV': isDev ? 'dev': 'build'
 		},
 		watch: [config.server]
 	}
-	return $.nodemon(nodeOptions);
+	return $.nodemon(nodeOptions)
+		.on('restart', function(ev) {
+			log('*** nodemon restarted');
+			log('files changed on restart:\n' + ev);
+		})
+		.on('start', function() {
+			log('*** nodemon started');
+		})
+		.on('crash', function() {
+			log('*** nodemon crashed: script crashed');
+		})
+		.on('exit', function() {
+			log('*** nodemon exited cleanly');
+		});
 });
 
 
