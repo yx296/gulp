@@ -78,6 +78,7 @@ gulp.task('serve-dev', ['inject'], function() {
 		})
 		.on('start', function() {
 			log('*** nodemon started');
+			startBrowserSync();
 		})
 		.on('crash', function() {
 			log('*** nodemon crashed: script crashed');
@@ -89,6 +90,35 @@ gulp.task('serve-dev', ['inject'], function() {
 
 
 ///////////
+
+function startBrowserSync() {
+	if (browserSync.active) {
+		return;
+	}
+	
+	log('Starting browser-sync on port ' + port);
+	
+	var options = {
+		proxy: 'localhost:' + port,
+		port: 3000,
+		files: [config.client + '**/*.*'],
+		ghostMode: {
+			clicks: true,
+			location: false,
+			forms: true,
+			scroll: true
+		},
+		injectChanges: true,
+		logFileChanges: true,
+		logLevel: 'debug',
+		logPrefix: 'gulp-patterns',
+		notify: true,
+		reloadDelay: 1000
+	}
+	
+	browserSync(options);
+}
+
 
 function clean(path) {
 	log('Cleaning: ' + $.util.colors.blue(path));
