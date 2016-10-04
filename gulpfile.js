@@ -26,6 +26,7 @@ gulp.task('styles', ['clean-styles'], function() {
 		.pipe($.less())
 		.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
 		.pipe(gulp.dest(config.temp));
+		.pipe(browserSync.stream());
 })
 
 gulp.task('clean-styles', function() {
