@@ -26,7 +26,6 @@ gulp.task('styles', ['clean-styles'], function() {
 		.pipe($.less())
 		.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
 		.pipe(gulp.dest(config.temp));
-		.pipe(browserSync.stream());
 })
 
 gulp.task('clean-styles', function() {
@@ -107,6 +106,8 @@ function startBrowserSync() {
 	
 	gulp.watch([config.less], ['styles'])
 		.on('change', function(event) {
+			console.log('config.less', config.less);
+			console.log('config.client', config.client);
 			changeEvent(event);
 		})
 	
@@ -129,7 +130,7 @@ function startBrowserSync() {
 		logLevel: 'debug',
 		logPrefix: 'gulp-patterns',
 		notify: true,
-		reloadDelay: 1000
+		reloadDelay: 500
 	}
 	
 	browserSync(options);
